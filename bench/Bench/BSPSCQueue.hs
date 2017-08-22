@@ -13,9 +13,9 @@ import ReactiveStreams.BSPSCQueue
 bspscQueueBench :: Benchmark
 bspscQueueBench = bgroup "BSPSCQueue"
   [ bench "delivering 100000 messages with 100 message buffer" $ nfIO $ do
-      let messageCount = 100000 :: Int
-          bufferSize = 100
-      (queue :: BSPSCQueue MVector (PrimState IO) Int) <- newQueue bufferSize
+      let messageCount = 1000000 :: Int
+          bufferSize = 4096
+      (queue :: BSPSCQueue MVector Int) <- newQueue bufferSize
       receiverLock <- newEmptyMVar
       void $ forkIO $ forM_ [1..messageCount] $ const $ enqueue queue 0
       void $ forkIO $ do
